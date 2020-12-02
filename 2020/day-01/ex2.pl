@@ -5,6 +5,11 @@ read_file_lines(Stream, [X | L]) :-
   number_string(X, Y),
   read_file_lines(Stream, L).
 
+read_file(Lines) :-
+  open('input1.txt', read, Str),
+  read_file_lines(Str, Lines),
+  close(Str).
+
 is_2020(Found, First, Second, Third) :-
   First + Second + Third =:= 2020,
   Found = Third.
@@ -25,13 +30,8 @@ find_multiplied_result(Result, []) :- Result = -1.
 find_multiplied_result(Result, [First | Rest]) :-
   find_2020_second_composite(Found1, Found2, First, Rest),
   Found1 > -1,
-  Result is Found1 * Found2 * First, !;
+  Result is Found1 * Found2 * First;
   find_multiplied_result(Result, Rest).
-
-read_file(Lines) :-
-  open('input1.txt', read, Str),
-  read_file_lines(Str, Lines),
-  close(Str).
 
 main :-
   read_file(Numbers),
